@@ -21,12 +21,12 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_ACCESS_SECRET }}
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Sync S3 to Local
-        run: aws s3 sync s3:${{ secrets.AWS_Bucket_Name }} ./
+        run: aws s3 sync s3:${{ secrets.AWS_BUCKET_NAME }} ./
 
       - name: Set Up Git
         run: |

@@ -13,15 +13,15 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_Access_Key }}
-          aws-secret-access-key: ${{ secrets.AWS_Access_Secret }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_ACCESS_SECRET }}
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Uploading from /home folder
-        run: aws s3 sync ./src/portais/home s3://${{ secrets.AWS_Bucket_Name }}/portais/home --size-only
+        run: aws s3 sync ./src/portais/home s3://${{ secrets.AWS_BUCKET_NAME }}/portais/home --size-only
 
       - name: Uploading from /maquininha folder
-        run: aws s3 sync ./src/portais/maquininha s3://${{ secrets.AWS_Bucket_Name }}/portais/maquininha --size-only
+        run: aws s3 sync ./src/portais/maquininha s3://${{ secrets.AWS_BUCKET_NAME }}/portais/maquininha --size-only
 
       - name: Sync files to Github
-        run: aws s3 sync s3://${{ secrets.AWS_Bucket_Name }} ./
+        run: aws s3 sync s3://${{ secrets.AWS_BUCKET_NAME }} ./
