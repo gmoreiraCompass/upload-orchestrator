@@ -18,7 +18,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Uploading from /home folder
-        run: aws s3 sync ./src/portais/home s3://${{ secrets.AWS_Bucket_Name }}/portais/home --exact-timestamps --size-only
+        run: aws s3 sync ./src/portais/home s3://${{ secrets.AWS_Bucket_Name }}/portais/home --size-only
 
       - name: Uploading from /maquininha folder
         run: aws s3 sync ./src/portais/maquininha s3://${{ secrets.AWS_Bucket_Name }}/portais/maquininha --size-only
