@@ -1,4 +1,4 @@
-name: RelaseCI
+name: Upload Archives
 on:
   push:
     branches:
