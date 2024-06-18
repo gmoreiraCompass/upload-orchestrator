@@ -17,5 +17,8 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_Access_Secret }}
           aws-region: us-east-1
 
-      - name: Deploy files to S3 bucket
-        run: aws s3 sync ./ s3://${{ secrets.AWS_Bucket_Name }} --delete
+      - name: Uploading from /home folder
+        run: aws s3 sync ./portais/home s3://${{ secrets.AWS_Bucket_Name }}/portais/home --recursive
+
+      - name: Uploading from /maquininha folder
+        run: aws s3 sync ./portais/maquininha s3://${{ secrets.AWS_Bucket_Name }}/portais/maquininha --recursive
