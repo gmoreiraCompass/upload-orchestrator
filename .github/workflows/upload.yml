@@ -15,7 +15,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_Access_Key }}
           aws-secret-access-key: ${{ secrets.AWS_Access_Secret }}
-          aws-region: us-east-1
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Uploading from /home folder
         run: aws s3 sync ./src/portais/home s3://${{ secrets.AWS_Bucket_Name }}/portais/home --size-only
