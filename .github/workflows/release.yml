@@ -18,7 +18,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Uploading from /home folder
-        run: aws s3 sync ./portais/home s3://${{ secrets.AWS_Bucket_Name }}/portais/home --recursive
+        run: aws s3 sync ./portais/home s3://${{ secrets.AWS_Bucket_Name }}/portais/home
 
       - name: Uploading from /maquininha folder
-        run: aws s3 sync ./portais/maquininha s3://${{ secrets.AWS_Bucket_Name }}/portais/maquininha --recursive
+        run: aws s3 sync ./portais/maquininha s3://${{ secrets.AWS_Bucket_Name }}/portais/maquininha
