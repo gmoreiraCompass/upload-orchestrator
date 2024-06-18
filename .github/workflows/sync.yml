@@ -25,8 +25,8 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_ACCESS_SECRET }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Sync S3 to Local
-        run: aws s3 sync s3:${{ secrets.AWS_BUCKET_NAME }} ./
+      - name: Sync /portais from S3 to Local
+        run: aws s3 sync s3:${{ secrets.AWS_BUCKET_NAME }}/portais ./src/portais
 
       - name: Set Up Git
         run: |
@@ -35,7 +35,7 @@ jobs:
 
       - name: Add Changes to Git
         run: |
-          cd ./local-dir
+          cd ./src/portais
           git add .
           git commit -m "Sync from S3 on $(date +'%Y-%m-%d %H:%M:%S')"
           git push
