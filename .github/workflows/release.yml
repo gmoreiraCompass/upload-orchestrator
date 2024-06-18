@@ -1,0 +1,21 @@
+name: RelaseCI
+on:
+  push:
+    branches:
+      - main
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_Access_Key }}
+          aws-secret-access-key: ${{ secrets.AWS_Access_Secret }}
+          aws-region: us-east-1
+
+      - name: Deploy files to S3 bucket
+        run: aws s3 sync ./ s3://${{ secrets.AWS_Bucket_Name }} --delete
