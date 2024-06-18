@@ -33,7 +33,18 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
+      - name: Check for Changes
+        run: |
+          cd ./local-dir
+          if git diff --quiet; then
+            echo "No changes detected"
+            exit 0
+          else
+            echo "Changes detected"
+          fi
+
       - name: Add Changes to Git
+        if: success() && steps.check-for-changes.outputs.has_changes == 'true'
         run: |
           cd ./
           git add .
