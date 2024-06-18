@@ -23,5 +23,5 @@ jobs:
       - name: Uploading from /maquininha folder
         run: aws s3 sync ./src/portais/maquininha s3://${{ secrets.AWS_Bucket_Name }}/portais/maquininha --size-only
 
-      - name: List files on AWS S3
-        run: aws s3 ls s3://${{ secrets.AWS_Bucket_Name }} --recursive
+      - name: Sync files to Github
+        run: aws s3 sync s3://${{ secrets.AWS_Bucket_Name }} ./
