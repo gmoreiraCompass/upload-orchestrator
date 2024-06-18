@@ -35,7 +35,6 @@ jobs:
 
       - name: Check for Changes
         run: |
-          cd ./local-dir
           if git diff --quiet; then
             echo "No changes detected"
             exit 0
@@ -46,7 +45,6 @@ jobs:
       - name: Add Changes to Git
         if: success() && steps.check-for-changes.outputs.has_changes == 'true'
         run: |
-          cd ./
           git add .
           git commit -m "Sync from S3 on $(date +'%Y-%m-%d %H:%M:%S')"
           git push
