@@ -8,10 +8,10 @@ on:
     branches:
       - main
   schedule:
-    - cron: "40 17 * * *"
+    - cron: "0 0 * * *"
 
 jobs:
-  sync-s3:
+  sync:
     runs-on: ubuntu-latest
 
     steps:

@@ -4,7 +4,7 @@ on:
     branches:
       - main
 jobs:
-  sync:
+  upload:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -22,6 +22,3 @@ jobs:
 
       - name: Uploading from /maquininha folder
         run: aws s3 sync ./src/portais/maquininha s3://${{ secrets.AWS_BUCKET_NAME }}/portais/maquininha --size-only
-
-      - name: Sync files to Github
-        run: aws s3 sync s3://${{ secrets.AWS_BUCKET_NAME }} ./
