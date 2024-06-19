@@ -41,7 +41,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Sync S3 to Local
-        run: aws s3 sync s3://${{ secrets.AWS_BUCKET_NAME }} ./
+        run: aws s3 sync s3://${{ secrets.AWS_BUCKET_NAME }} ./src
 
       - name: Add Changes to Git
         if: success() && steps.check-for-changes.outputs.has_changes == 'true'
