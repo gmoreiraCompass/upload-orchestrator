@@ -17,8 +17,24 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_ACCESS_SECRET }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Set Up Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Check for Changes
+        run: |
+          if git diff --quiet; then
+            echo "No changes detected"
+            exit 0
+          else
+            echo "Changes detected"
+          fi
+
       - name: Uploading from /home folder
+        if: success() && steps.check-for-changes.outputs.has_changes == 'true'
         run: aws s3 sync ./src/portais/home s3://${{ secrets.AWS_BUCKET_NAME }}/portais/home --size-only
 
       - name: Uploading from /maquininha folder
+        if: success() && steps.check-for-changes.outputs.has_changes == 'true'
         run: aws s3 sync ./src/portais/maquininha s3://${{ secrets.AWS_BUCKET_NAME }}/portais/maquininha --size-only
