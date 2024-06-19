@@ -19,9 +19,9 @@ jobs:
         id: changed-files
         run: |
           if ${{ github.event_name == 'pull_request' }}; then
-              echo "changed_files=$(git diff --name-only -r HEAD^1 HEAD | xargs)" >> $GITHUB_OUTPUT
+              echo "changed_files=$(git diff --name-only -r HEAD^1 HEAD | xargs | grep -vE '\.(yml|md)$')" >> $GITHUB_OUTPUT
           else
-              echo "changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }} | xargs)" >> $GITHUB_OUTPUT
+              echo "changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }} | xargs | grep -vE '\.(yml|md)$')" >> $GITHUB_OUTPUT
           fi
 
       - name: List changed files
