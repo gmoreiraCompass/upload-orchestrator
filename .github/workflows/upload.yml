@@ -24,12 +24,6 @@ jobs:
               echo "changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }} | xargs | grep -vE '\.(yml|md)$')" >> $GITHUB_OUTPUT
           fi
 
-      - name: List changed files
-        run: |
-          for file in ${{ steps.changed-files.outputs.changed_files }}; do
-              echo "$file was changed"
-          done
-
       - name: Set Up Git
         run: |
           git config --global user.name 'github-actions[bot]'
@@ -56,8 +50,10 @@ jobs:
         if: success() && steps.check-for-changes.outputs.has_changes == 'true'
         run: aws s3 sync ./src/portais s3://${{ secrets.AWS_BUCKET_NAME }}/portais --size-only
 
-      # - name: Invalidate cache
-      #   if: success() && steps.check-for-changes.outputs.has_changes == 'true'
-      #   run: aws cloudfront create-invalidation |
-      #     --distribution-id ${{ secrets.AWS_DISTRIBUITION_ID_CLOUDFRONT }} |
-      #     --paths "/example-path/example-file.jpg" "/example-path/example-file2.png"
+      - name: Invalidate cache
+        if: success() && steps.check-for-changes.outputs.has_changes == 'true'
+        run: |
+          for file in ${{ steps.changed-files.outputs.changed_files }}; do
+            aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUITION_ID_CLOUDFRONT }} --paths ./${{ secrets.AWS_BUCKET_NAME }}/$file
+            echo $file was invalidate
+          done
