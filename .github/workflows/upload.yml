@@ -53,7 +53,7 @@ jobs:
       - name: Invalidate cache
         # if: success() && steps.check-for-changes.outputs.has_changes == 'true'
         run: |
-          echo ${{steps.changed_files.outputs.changed_files}}
+          echo ${{steps.changed-files.outputs.changed_files}}
           for file in ${{ steps.changed-files.outputs.changed_files }}; do
             aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUITION_ID_CLOUDFRONT }} --paths ./${{ secrets.AWS_BUCKET_NAME }}/$file
             echo $file was invalidate
