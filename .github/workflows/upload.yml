@@ -46,7 +46,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Uploading from /home folder
-        if: success() && steps.check-for-changes.outputs.has_changes == 'true'
         run: aws s3 sync ./src/portais s3://${{ secrets.AWS_BUCKET_NAME }}/portais --size-only
 
   manage-cache:
