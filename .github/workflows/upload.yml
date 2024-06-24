@@ -31,7 +31,7 @@ jobs:
 
       - name: Check for Changes
         run: |
-          if git diff --quiet; then
+          if git diff HEAD^1 HEAD --quiet; then
             echo "No changes detected"
             exit 0
           else
@@ -51,8 +51,9 @@ jobs:
         run: aws s3 sync ./src/portais s3://${{ secrets.AWS_BUCKET_NAME }}/portais --size-only
 
       - name: Invalidate cache
-        if: success() && steps.check-for-changes.outputs.has_changes == 'true'
+        # if: success() && steps.check-for-changes.outputs.has_changes == 'true'
         run: |
+          echo ${{steps.changed_files.outputs.changed_files}}
           for file in ${{ steps.changed-files.outputs.changed_files }}; do
             aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUITION_ID_CLOUDFRONT }} --paths ./${{ secrets.AWS_BUCKET_NAME }}/$file
             echo $file was invalidate
